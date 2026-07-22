@@ -1,0 +1,989 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 HelveticaNeue-Italic;
+\f3\fnil\fcharset0 Menlo-Regular;\f4\fnil\fcharset0 LucidaGrande;\f5\fswiss\fcharset0 Helvetica;
+}
+{\colortbl;\red255\green255\blue255;\red154\green154\blue154;}
+{\*\expandedcolortbl;;\csgray\c66667;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid401\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid501\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid6}
+{\list\listtemplateid7\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid601\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid7}
+{\list\listtemplateid8\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid701\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid8}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}{\listoverride\listid7\listoverridecount0\ls7}{\listoverride\listid8\listoverridecount0\ls8}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 API Specification Document (ASD)\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\fs26 \cf0 Product:
+\f1\b0  ClockUp 
+\f2\i (Working Name)
+\f1\i0 \uc0\u8232 
+\f0\b Version:
+\f1\b0  MVP v1.0\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 API Standards\
+Base URL\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+/api/v1\
+\
+Example\
+\
+/api/v1/auth/login\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Authentication\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Every protected API requires an authenticated Supabase session.\
+\
+Authorization: Bearer <access_token>\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Response Format\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Every API follows the same structure.\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Success\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\{\
+  "success": true,\
+  "message": "Clock In successful",\
+  "data": \{\}\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Error\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\{\
+  "success": false,\
+  "message": "Outside office radius",\
+  "error": \{\
+    "code": "OUTSIDE_GEOFENCE"\
+  \}\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Module 1 \'97 Authentication\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Register\
+Endpoint\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+POST /api/v1/auth/register\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Request\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\{\
+  "fullName": "Revanth",\
+  "employeeId": "EMP001",\
+  "officeEmail": "revanth@company.com",\
+  "designation": "UI/UX Designer",\
+  "officeLocationId": "uuid",\
+  "password": "********"\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Success\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\{\
+  "success": true,\
+  "message": "Account created successfully"\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Possible Errors\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls1\ilvl0
+\f3\b0\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Employee already exists\
+\ls1\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Invalid email\
+\ls1\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Weak password\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Login\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+POST /api/v1/auth/login\
+\
+Request\
+\
+\{\
+  "officeEmail": "revanth@company.com",\
+  "password": "********"\
+\}\
+\
+Response\
+\
+\{\
+  "success": true,\
+  "data": \{\
+    "accessToken": "...",\
+    "refreshToken": "...",\
+    "user": \{\}\
+  \}\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Logout\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+POST /api/v1/auth/logout\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Module 2 \'97 Dashboard\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Dashboard Summary\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+GET /api/v1/dashboard\
+\
+Returns\
+\
+\{\
+  "todayStatus": "WORKING",\
+  "clockIn": "09:05",\
+  "workedMinutes": 420,\
+  "remainingMinutes": 120,\
+  "goalCompleted": false,\
+  "todayPoints": 100,\
+  "rank": 5,\
+  "weeklySummary": []\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Module 3 \'97 Attendance\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Clock In\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+POST /api/v1/attendance/clock-in\
+\
+\
+Request\
+\
+\{\
+  "latitude": 17.448,\
+  "longitude": 78.392,\
+  "accuracy": 8\
+\}\
+\
+\
+Backend Validation\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls2\ilvl0
+\f3\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Logged in\
+\ls2\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Already clocked in?\
+\ls2\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 GPS valid?\
+\ls2\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Inside office radius?\
+\ls2\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Attendance exists today?\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 If everything passes\
+
+\f4 \uc0\u8595 
+\f1 \
+Create attendance record.\
+\
+Response\
+\
+\{\
+  "success": true,\
+  "message": "Clock In successful",\
+  "data": \{\
+    "clockIn": "09:02"\
+  \}\
+\}\
+\
+\
+Errors\
+\
+GPS_DENIED\
+\
+OUTSIDE_GEOFENCE\
+\
+ALREADY_CLOCKED_IN\
+\
+SERVER_ERROR\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Clock Out\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+POST /api/v1/attendance/clock-out\
+\
+Request\
+\
+\{\
+  "latitude": 17.448,\
+  "longitude": 78.392,\
+  "accuracy": 9\
+\}\
+\
+Backend\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls3\ilvl0
+\f3\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Verify active attendance\
+\ls3\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Verify GPS\
+\ls3\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Calculate hours\
+\ls3\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Calculate points\
+\ls3\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Insert points ledger\
+\ls3\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Finalize attendance\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+Response\
+\
+\{\
+  "workedMinutes": 565,\
+  "extraMinutes": 25,\
+  "pointsEarned": 110,\
+  "rank": 4\
+\}\
+\
+\
+Errors\
+\
+NOT_CLOCKED_IN\
+\
+OUTSIDE_GEOFENCE\
+\
+SERVER_ERROR\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Attendance History\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+GET /api/v1/attendance/history\
+\
+Query Parameters\
+\
+?page=1\
+\
+&limit=20\
+\
+&month=7\
+\
+&year=2026\
+\
+Response\
+\
+[\
+  \{\
+    "date": "2026-07-18",\
+    "clockIn": "09:02",\
+    "clockOut": "06:18",\
+    "workedHours": "9h16m",\
+    "points": 110\
+  \}\
+]\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Attendance Details\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+GET /api/v1/attendance/:id\
+\
+Returns complete attendance information.\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Module 4 \'97 Leaderboard\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Overall Leaderboard\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+GET /api/v1/leaderboard\
+\
+Filters\
+\
+period=today\
+\
+period=week\
+\
+period=month\
+\
+period=all\
+\
+\
+Response\
+\
+[\
+  \{\
+    "rank": 1,\
+    "name": "Rahul",\
+    "points": 1220\
+  \}\
+]\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 My Rank\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+GET /api/v1/leaderboard/me\
+\
+Response\
+\
+\{\
+  "rank": 5,\
+  "points": 920,\
+  "totalUsers": 64\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Module 5 \'97 Profile\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Get Profile\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+GET /api/v1/profile\
+\
+\
+Response\
+\
+\{\
+  "name": "Revanth",\
+  "designation": "Designer",\
+  "points": 920,\
+  "hours": 182,\
+  "rank": 5\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Update Profile\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+PATCH /api/v1/profile\
+\
+Editable\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls4\ilvl0
+\f3\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Avatar\
+\ls4\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Display Name\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 Not Editable\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls5\ilvl0
+\f3\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Employee ID\
+\ls5\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Office\
+\ls5\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Email\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Module 6 \'97 Notifications\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Get Notifications\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+GET /api/v1/notifications\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Mark Read\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+PATCH /api/v1/notifications/:id\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Module 7 \'97 Settings\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Get Settings\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+GET /api/v1/settings\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Update Settings\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+PATCH /api/v1/settings\
+\
+Example\
+\
+\{\
+  "theme": "dark",\
+  "notifications": true\
+\}\
+\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Error Codes\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Code
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Description
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 AUTH_REQUIRED
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Login required
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 INVALID_CREDENTIALS
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Wrong email/password
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 EMPLOYEE_EXISTS
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Employee ID already exists
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 GPS_DENIED
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Location permission denied
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 OUTSIDE_GEOFENCE
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 User outside office
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 ALREADY_CLOCKED_IN
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Attendance already started
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 NOT_CLOCKED_IN
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 No active attendance
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 DUPLICATE_ATTENDANCE
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Attendance exists
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 INVALID_REQUEST
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Invalid payload
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 SERVER_ERROR
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Internal error\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+
+\f0\b HTTP Status Codes\
+
+\f1\b0 \
+\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Status
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Usage
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 200
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Success
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 201
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Resource Created
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 400
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Validation Error
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 401
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Unauthorized
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 403
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Forbidden
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 404
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Not Found
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 409
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Conflict
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 422
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Invalid Business Rule
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 500
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Server Error\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 API Security\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Every request should:\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls6\ilvl0
+\f3\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Verify Supabase session.\
+\ls6\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Validate request body with Zod.\
+\ls6\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Check Row Level Security (RLS).\
+\ls6\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Use server timestamps (never trust client timestamps).\
+\ls6\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Sanitize all user input.\
+\ls6\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Rate-limit authentication endpoints.\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 API Flow Example\
+Clock In\
+\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 User taps "Clock In"\
+        \uc0\u9474 \
+        
+\f4 \uc0\u9660 
+\f1 \
+Frontend requests GPS\
+        \uc0\u9474 \
+        
+\f4 \uc0\u9660 
+\f1 \
+POST /attendance/clock-in\
+        \uc0\u9474 \
+        
+\f4 \uc0\u9660 
+\f1 \
+Validate Session\
+        \uc0\u9474 \
+        
+\f4 \uc0\u9660 
+\f1 \
+Check Today's Attendance\
+        \uc0\u9474 \
+        
+\f4 \uc0\u9660 
+\f1 \
+Validate Geofence\
+        \uc0\u9474 \
+        
+\f4 \uc0\u9660 
+\f1 \
+Create Attendance Record\
+        \uc0\u9474 \
+        
+\f4 \uc0\u9660 
+\f1 \
+Return Success\
+        \uc0\u9474 \
+        
+\f4 \uc0\u9660 
+\f1 \
+Dashboard Starts Live Timer\
+\
+
+\f0\b API Versioning\
+
+\f1\b0 All APIs must be versioned.\
+Example\
+\
+/api/v1/dashboard\
+\
+/api/v2/dashboard\
+\
+This allows future changes without breaking existing clients.\
+\
+
+\f0\b Backend Architecture\
+
+\f1\b0 \
+Frontend (Next.js)\
+\
+
+\f4 \uc0\u8595 
+\f1 \
+\
+Route Handler (/api)\
+\
+
+\f4 \uc0\u8595 
+\f1 \
+\
+Validation (Zod)\
+\
+
+\f4 \uc0\u8595 
+\f1 \
+\
+Service Layer\
+\
+
+\f4 \uc0\u8595 
+\f1 \
+\
+Repository Layer\
+\
+
+\f4 \uc0\u8595 
+\f1 \
+\
+Supabase Database\
+\
+
+\f0\b Never
+\f1\b0  put business logic directly inside API route handlers. Route handlers should only:\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls7\ilvl0
+\f3\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Authenticate the request.\
+\ls7\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Validate the payload.\
+\ls7\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Call the appropriate service.\
+\ls7\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Return a standardized response.\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\partightenfactor0
+
+\f0\b\fs40 \cf0 API Documentation Standards\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Each endpoint should include:\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls8\ilvl0
+\f3\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Purpose\
+\ls8\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Authentication required\
+\ls8\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Request schema\
+\ls8\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Response schema\
+\ls8\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Error responses\
+\ls8\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Business rules\
+\ls8\ilvl0
+\f3\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Example request/response\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 This makes the API self-documenting and easier to maintain.\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 \
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \
+\
+\
+}

@@ -1,0 +1,1374 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 HelveticaNeue-Italic;
+\f3\fnil\fcharset128 HiraginoSans-W3;\f4\fnil\fcharset0 AppleColorEmoji;\f5\fswiss\fcharset0 Helvetica;
+\f6\fnil\fcharset0 LucidaGrande;\f7\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red154\green154\blue154;}
+{\*\expandedcolortbl;;\csgray\c66667;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid201\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Database Design Document (DDD)\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\fs26 \cf0 Product:
+\f1\b0  ClockUp 
+\f2\i (Working Name)
+\f1\i0 \uc0\u8232 
+\f0\b Version:
+\f1\b0  MVP v1.0\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Database Overview\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 For MVP we'll use 
+\f0\b Supabase PostgreSQL
+\f1\b0 .\
+We'll keep the schema normalized and scalable.\
+\
+Users\
+   \uc0\u9474 \
+   
+\f3 \'84\'a5
+\f1 \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472  Attendance\
+   \uc0\u9474               \u9474 \
+   \uc0\u9474               \u9492 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472  Points Ledger\
+   \uc0\u9474 \
+   
+\f3 \'84\'a5
+\f1 \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472  Notifications\
+   \uc0\u9474 \
+   \uc0\u9492 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472  User Settings\
+\
+\
+Notice something?\
+
+\f4 \uc0\u10060 
+\f1  I intentionally 
+\f0\b didn't create a Leaderboard table
+\f1\b0 .\
+Leaderboard should be 
+\f0\b calculated
+\f1\b0 , not stored.\
+This prevents synchronization issues.\
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Table 1 \'97 Users\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Stores employee information.\
+\
+\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Field
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Type
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Constraints
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Primary Key
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 employee_id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Unique
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 full_name
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Required
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 office_email
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Unique
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 designation
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Required
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 office_location_id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 FK
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 avatar_url
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Nullable
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 password_auth_id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Supabase Auth
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 created_at
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Auto
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx2880
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx5760
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 updated_at
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Auto\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\
+
+\f0\b Notes\
+
+\f1\b0 Never store passwords.\
+Supabase Auth handles authentication.\
+\
+
+\f0\b Table 2 \'97 Office Locations\
+
+\f1\b0 Instead of saving\
+\
+Hyderabad\
+\
+save\
+\
+office_location_id\
+\
+This allows multiple offices later.\
+\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Field
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Type
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 office_name
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 latitude
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 DECIMAL
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 longitude
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 DECIMAL
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 allowed_radius
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 INTEGER
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 created_at
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 Example\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Office
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Radius
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Hyderabad
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 100m
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Bangalore
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 100m
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Pune
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 100m\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+
+\f0\b Table 3 \'97 Attendance\
+
+\f1\b0 This is the most important table.\
+\
+\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Field
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Type
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 user_id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID FK
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 work_date
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 DATE
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 clock_in
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 clock_out
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 worked_minutes
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 INTEGER
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 extra_minutes
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 INTEGER
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 points_earned
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 INTEGER
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 status
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 ENUM
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 clock_in_latitude
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 DECIMAL
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 clock_in_longitude
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 DECIMAL
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 clock_out_latitude
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 DECIMAL
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 clock_out_longitude
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 DECIMAL
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 clock_in_accuracy
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 FLOAT
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 clock_out_accuracy
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 FLOAT
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 is_edited
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 BOOLEAN
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 created_at
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+
+\f0\b Status Enum\
+
+\f1\b0 \
+Not Started\
+\
+Working\
+\
+Completed\
+\
+Missed Clock Out\
+\
+Incomplete\
+\
+\
+
+\f0\b Constraint\
+
+\f1\b0 One attendance per day.\
+\
+UNIQUE(user_id, work_date)\
+\
+\
+
+\f0\b Table 4 \'97 Points Ledger\
+
+\f1\b0 This is an important architectural decision.\
+Many beginners simply save\
+\
+Total Points = 920\
+\
+Don't.\
+Instead keep a ledger.\
+\
+\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Field
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Type
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 user_id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 attendance_id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 reason
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 points
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 INTEGER
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 created_at
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+\cf0 Example\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Reason
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Points
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Daily Goal
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 100
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Extra 15 mins
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 10
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Extra 30 mins
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 10\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+Later if you add badges\
+
+\f6 \uc0\u8595 
+\f1 \
+No schema changes.\
+\
+\
+Table 5 \'97 Notifications\
+\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Field
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Type
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 user_id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 title
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 body
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TEXT
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 is_read
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 BOOLEAN
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 created_at
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+
+\f0\b Table 6 \'97 User Settings\
+
+\f1\b0 \
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Field
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Type
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 user_id
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 UUID
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 theme
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 ENUM
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 notifications_enabled
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 BOOLEAN
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 created_at
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 TIMESTAMP\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+
+\f0\b Future Tables\
+
+\f1\b0 Version 2\
+\
+Badges\
+\
+Badge Unlocks\
+\
+Challenges\
+\
+Teams\
+\
+Departments\
+\
+Admin Roles\
+\
+Leave Requests\
+\
+Office Events\
+\
+\
+
+\f0\b Relationships\
+
+\f1\b0 \
+Users\
+   \uc0\u9474 \
+   
+\f3 \'84\'a5
+\f1 \uc0\u9472 \u9472 \u9472 \u9472  Attendance\
+   \uc0\u9474           \u9474 \
+   \uc0\u9474           \u9492 \u9472 \u9472 \u9472 \u9472  Points Ledger\
+   \uc0\u9474 \
+   
+\f3 \'84\'a5
+\f1 \uc0\u9472 \u9472 \u9472 \u9472  Notifications\
+   \uc0\u9474 \
+   \uc0\u9492 \u9472 \u9472 \u9472 \u9472  User Settings\
+\
+Office Locations\
+       \uc0\u9474 \
+       \uc0\u9492 \u9472 \u9472 \u9472 \u9472  Users\
+\
+
+\f0\b Indexes\
+
+\f1\b0 These make queries fast.\
+Users\
+\
+employee_id\
+\
+Attendance\
+\
+user_id\
+\
+work_date\
+\
+Points\
+\
+user_id\
+\
+Notifications\
+\
+user_id\
+\
+\
+
+\f0\b Row Level Security (RLS)\
+
+\f1\b0 Every table should enforce RLS.\
+Rules\
+
+\f0\b Users\
+
+\f1\b0 Can read\
+Own profile\
+Can update\
+Own profile\
+Cannot delete\
+\
+
+\f0\b Attendance\
+
+\f1\b0 Can\
+Read own\
+Insert own\
+Cannot update completed attendance\
+Cannot delete\
+\
+
+\f0\b Points\
+
+\f1\b0 Read only\
+No direct editing.\
+\
+
+\f0\b Notifications\
+
+\f1\b0 Own only.\
+\
+
+\f0\b Derived Data (Never Store)\
+
+\f1\b0 These values should be calculated on demand.\
+
+\f4 \uc0\u10060 
+\f1  Don't Store\
+\
+Leaderboard Rank\
+\
+Current Rank\
+\
+Weekly Hours\
+\
+Monthly Hours\
+\
+Average Hours\
+\
+Remaining Time\
+\
+Instead compute them with SQL views or queries.\
+\
+
+\f0\b SQL Views (Recommended)\
+
+\f1\b0 Create views for common calculations.\
+
+\f0\b v_user_stats\
+
+\f1\b0 Returns\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls1\ilvl0
+\f7\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Total Hours\
+\ls1\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Total Days\
+\ls1\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Total Points\
+\ls1\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Average Hours\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+
+\f0\b v_leaderboard\
+
+\f1\b0 Returns\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls2\ilvl0
+\f7\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Rank\
+\ls2\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Name\
+\ls2\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Points\
+\ls2\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Total Hours\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+
+\f0\b v_week_summary\
+
+\f1\b0 Returns\
+Last 7 days attendance.\
+This keeps frontend code much simpler.\
+\
+
+\f0\b Storage\
+
+\f1\b0 Supabase Storage\
+Only\
+\
+Avatar Images\
+\
+Nothing else.\
+\
+
+\f0\b Data Flow\
+
+\f1\b0 \
+\
+Clock In\
+\
+
+\f6 \uc0\u8595 
+\f1 \
+\
+Attendance Record Created\
+\
+
+\f6 \uc0\u8595 
+\f1 \
+\
+Timer Running\
+\
+
+\f6 \uc0\u8595 
+\f1 \
+\
+Clock Out\
+\
+
+\f6 \uc0\u8595 
+\f1 \
+\
+Calculate Minutes\
+\
+
+\f6 \uc0\u8595 
+\f1 \
+\
+Calculate Points\
+\
+
+\f6 \uc0\u8595 
+\f1 \
+\
+Insert Points Ledger\
+\
+
+\f6 \uc0\u8595 
+\f1 \
+\
+Leaderboard Query Updates\
+\
+
+\f6 \uc0\u8595 
+\f1 \
+\
+Dashboard Refresh\
+\
+\
+
+\f0\b Backup Strategy\
+
+\f1\b0 Supabase automated backups.\
+No custom backup system required for MVP.\
+\
+
+\f0\b Final Database Summary\
+
+\f1\b0 \
+\
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b \cf0 Table
+\f5\b0\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\qc\partightenfactor0
+
+\f0\b\fs26 \cf0 Purpose
+\f5\b0\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Users
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Employee information
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Office Locations
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 GPS validation
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Attendance
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Daily work sessions
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Points Ledger
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 All point transactions
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Notifications
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 User alerts
+\f5\fs24 \cell \row
+
+\itap1\trowd \taflags1 \trgaph108\trleft-108 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx4320
+\clvertalt \clshdrawnil \clbrdrt\brdrs\brdrw20\brdrcf2 \clbrdrl\brdrs\brdrw20\brdrcf2 \clbrdrb\brdrs\brdrw20\brdrcf2 \clbrdrr\brdrs\brdrw20\brdrcf2 \clpadt20 \clpadl100 \clpadb20 \clpadr100 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 User Settings
+\f5\fs24 \cell 
+\pard\intbl\itap1\pardeftab560\slleading20\partightenfactor0
+
+\f1\fs26 \cf0 Preferences\cell \lastrow\row
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\partightenfactor0
+
+\f0\b\fs40 \cf0 One architectural improvement I'd make\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Instead of storing 
+\f0\b points directly in the Attendance table
+\f1\b0 , I'd make 
+\f0\b Attendance the source of truth
+\f1\b0  and 
+\f0\b Points Ledger the accounting system
+\f1\b0 .\
+For example:\
+Attendance:\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 \
+Worked\
+\
+9h 30m\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Points Ledger:\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 \
+Daily Goal\
+\
++100\
+\
+Bonus\
+\
++20\
+\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Now imagine later you introduce:\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls3\ilvl0
+\f7\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 Weekly bonus\
+\ls3\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Monthly challenge\
+\ls3\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Birthday reward\
+\ls3\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Admin bonus\
+\ls3\ilvl0
+\f7\fs18 {\listtext	\uc0\u8226 	}
+\f1\fs26 Achievement unlock\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 You simply insert new ledger entries\'97no need to redesign your attendance table or recalculate existing records. This is a pattern used in finance and loyalty systems because it provides a complete audit trail.\
+\
+\
+\
+}
