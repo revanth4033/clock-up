@@ -78,12 +78,14 @@ export const attendanceRepository = {
     supabase: SupabaseClient,
     coords: GeoCoords,
     awardCredits = false,
+    enableRedemption = false,
   ): Promise<ClockOutResult> {
     const { data, error } = await supabase.rpc("clock_out", {
       p_latitude: coords.latitude,
       p_longitude: coords.longitude,
       p_accuracy: coords.accuracy,
       p_award_credits: awardCredits,
+      p_enable_redemption: enableRedemption,
     });
     if (error) throw error;
     const row = (Array.isArray(data) ? data[0] : data) as ClockOutRow;
@@ -97,11 +99,13 @@ export const attendanceRepository = {
     attendanceId: string,
     clockOutIso: string,
     awardCredits = false,
+    enableRedemption = false,
   ): Promise<ClockOutResult> {
     const { data, error } = await supabase.rpc("recover_missed_clock_out", {
       p_attendance_id: attendanceId,
       p_clock_out: clockOutIso,
       p_award_credits: awardCredits,
+      p_enable_redemption: enableRedemption,
     });
     if (error) throw error;
     const row = (Array.isArray(data) ? data[0] : data) as ClockOutRow;
