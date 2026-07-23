@@ -72,30 +72,36 @@ export const attendanceRepository = {
     if (error) throw error;
   },
 
-  /** Clock out via RPC (computes duration + points, writes atomically). */
+  /** Clock out via RPC (computes duration + points, writes atomically). When
+   * `awardCredits` is true, the same transaction also earns Time Credits. */
   async clockOut(
     supabase: SupabaseClient,
     coords: GeoCoords,
+    awardCredits = false,
   ): Promise<ClockOutResult> {
     const { data, error } = await supabase.rpc("clock_out", {
       p_latitude: coords.latitude,
       p_longitude: coords.longitude,
       p_accuracy: coords.accuracy,
+      p_award_credits: awardCredits,
     });
     if (error) throw error;
     const row = (Array.isArray(data) ? data[0] : data) as ClockOutRow;
     return toClockOutResult(row);
   },
 
-  /** Recover a missed clock-out via RPC (recomputes + flags is_edited). */
+  /** Recover a missed clock-out via RPC (recomputes + flags is_edited). When
+   * `awardCredits` is true, the recovered day earns Time Credits too. */
   async recover(
     supabase: SupabaseClient,
     attendanceId: string,
     clockOutIso: string,
+    awardCredits = false,
   ): Promise<ClockOutResult> {
     const { data, error } = await supabase.rpc("recover_missed_clock_out", {
       p_attendance_id: attendanceId,
       p_clock_out: clockOutIso,
+      p_award_credits: awardCredits,
     });
     if (error) throw error;
     const row = (Array.isArray(data) ? data[0] : data) as ClockOutRow;

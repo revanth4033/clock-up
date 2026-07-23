@@ -18,6 +18,8 @@ as a new ADR that supersedes the old one.
 | [ADR-005](./ADR-005-security-definer-strategy.md) | SECURITY DEFINER Strategy (no service-role key) | Accepted |
 | [ADR-006](./ADR-006-theme-persistence.md) | Theme Persistence | Accepted |
 | [ADR-007](./ADR-007-authentication-architecture.md) | Authentication Architecture | Accepted |
+| [ADR-008](./ADR-008-time-credits.md) | Time Credits System (staged migration) | Proposed |
+| [ADR-009](./ADR-009-credit-redemption-and-points.md) | Time Credit Redemption & the Flat-100 Points Model | Accepted |
 
 The canonical product & design specification lives in the parent `/docs` folder
 (PRD, FSD, BRD, UFD, DDD, ASD, TADG, DSD, DRPG).

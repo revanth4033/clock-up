@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "./auth.service";
 import { attendanceRepository } from "@/repositories/attendance.repository";
 import { HISTORY_PAGE_SIZE } from "@/constants/attendance";
+import { ENABLE_TIME_CREDITS } from "@/lib/flags";
 import type { ServiceResult } from "./types";
 import type { ClockOutResult, GeoCoords, HistoryRecord } from "@/types/domain";
 
@@ -49,7 +50,11 @@ export async function clockOut(
 ): Promise<ServiceResult<ClockOutResult>> {
   const supabase = await createClient();
   try {
-    const result = await attendanceRepository.clockOut(supabase, coords);
+    const result = await attendanceRepository.clockOut(
+      supabase,
+      coords,
+      ENABLE_TIME_CREDITS,
+    );
     return { ok: true, message: "Clocked out successfully.", data: result };
   } catch (e) {
     const { code, message } = mapError(e);
@@ -67,6 +72,7 @@ export async function recoverMissedClockOut(
       supabase,
       attendanceId,
       clockOutIso,
+      ENABLE_TIME_CREDITS,
     );
     return { ok: true, message: "Attendance updated.", data: result };
   } catch (e) {
