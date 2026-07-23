@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import type { AuthError } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import { usersRepository } from "@/repositories/users.repository";
@@ -172,17 +173,23 @@ export async function updatePassword(
   return { ok: true, message: "Password updated.", data: null };
 }
 
-/** Resolves the authenticated user + profile, or null. Used by guards/layout. */
-export async function getCurrentUser(): Promise<{
-  authId: string;
-  email: string;
-  profile: UserProfile | null;
-} | null> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return null;
-  const profile = await usersRepository.findByAuthId(supabase, user.id);
-  return { authId: user.id, email: user.email ?? "", profile };
-}
+/**
+ * Resolves the authenticated user + profile, or null. Wrapped in React `cache`
+ * so multiple callers within one request (the dashboard layout + the dashboard
+ * page/service) share a single `getUser` + profile query.
+ */
+export const getCurrentUser = cache(
+  async (): Promise<{
+    authId: string;
+    email: string;
+    profile: UserProfile | null;
+  } | null> => {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return null;
+    const profile = await usersRepository.findByAuthId(supabase, user.id);
+    return { authId: user.id, email: user.email ?? "", profile };
+  },
+);

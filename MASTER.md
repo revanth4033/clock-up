@@ -52,8 +52,17 @@
       (`mailer_autoconfirm:true`). All 19 e2e checks pass: register auto-login,
       trigger creates users + user_settings, login, logout, session persistence,
       protected routes, duplicate email/employee_id (both 409, atomic), password reset.
-- [ ] Phase 6 — Dashboard
-- [ ] Phase 7 — Attendance
+- [x] **Phase 6 — Dashboard** ✅ COMPLETE + VERIFIED (2026-07-23). Read-only UI:
+      welcome, working-hours (Time Ring), today's status, points, weekly summary,
+      leaderboard preview, recent attendance, disabled quick actions. `getDashboardData`
+      service aggregates via repos + views (v_user_stats/v_week_summary/v_leaderboard);
+      getCurrentUser memoized (React cache). loading/empty/error states. Screenshots
+      verified empty + populated, desktop + mobile. No attendance logic (out of scope).
+- [x] **Phase 7 — Attendance Engine** ✅ COMPLETE + VERIFIED (2026-07-23).
+      SECURITY DEFINER RPCs (`20260723060305_attendance_functions.sql`, applied):
+      clock_in/clock_out/recover + geo/points helpers — atomic, server-authoritative,
+      points→ledger only. TS repo/service/routes, geolocation, live timer, missed-recovery
+      dialog, functional dashboard, History page w/ pagination. 31/31 checks pass.
 - [ ] Phase 8 — Leaderboard
 - [ ] Phase 9 — Profile
 - [ ] Phase 10 — Settings
