@@ -10,6 +10,7 @@ type StatsRow = {
   total_points: number | null;
   total_worked_minutes: number | null;
   total_completed_days: number | null;
+  total_attendance_days: number | null;
   avg_worked_minutes: number | null;
 };
 type WeekRow = {
@@ -36,7 +37,7 @@ export const statsRepository = {
     const { data, error } = await supabase
       .from("v_user_stats")
       .select(
-        "total_points, total_worked_minutes, total_completed_days, avg_worked_minutes",
+        "total_points, total_worked_minutes, total_completed_days, total_attendance_days, avg_worked_minutes",
       )
       .maybeSingle();
     if (error) throw error;
@@ -44,6 +45,7 @@ export const statsRepository = {
     const row = data as StatsRow;
     return {
       totalPoints: Number(row.total_points ?? 0),
+      totalWorkingDays: Number(row.total_attendance_days ?? 0),
       totalWorkedMinutes: Number(row.total_worked_minutes ?? 0),
       totalCompletedDays: Number(row.total_completed_days ?? 0),
       avgWorkedMinutes: Number(row.avg_worked_minutes ?? 0),

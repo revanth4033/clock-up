@@ -34,6 +34,14 @@ export function toPercent(value: number, max: number): number {
   return Math.min(100, Math.round((value / max) * 100));
 }
 
+/** ISO timestamp -> "July 2026" (used for "member since"). */
+export function formatMonthYear(iso: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    year: "numeric",
+  }).format(new Date(iso));
+}
+
 /** "Revanth Banisetti" -> "RB". */
 export function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);

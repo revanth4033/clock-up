@@ -17,6 +17,7 @@ export type UserProfile = {
   officeLocationId: string;
   officeName: string;
   avatarUrl: string | null;
+  createdAt: string;
 };
 
 /** Persisted attendance statuses (matches the DB enum). "Not Started" is a
@@ -41,6 +42,7 @@ export type WeekDay = {
 
 export type UserStats = {
   totalPoints: number;
+  totalWorkingDays: number;
   totalWorkedMinutes: number;
   totalCompletedDays: number;
   avgWorkedMinutes: number;

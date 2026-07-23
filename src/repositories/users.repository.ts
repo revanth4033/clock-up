@@ -11,11 +11,12 @@ type Row = {
   designation: string;
   office_location_id: string;
   avatar_url: string | null;
+  created_at: string;
   office_locations: OfficeEmbed | OfficeEmbed[] | null;
 };
 
 const COLUMNS =
-  "id, employee_id, full_name, office_email, designation, office_location_id, avatar_url, office_locations(office_name)";
+  "id, employee_id, full_name, office_email, designation, office_location_id, avatar_url, created_at, office_locations(office_name)";
 
 function officeNameOf(office: Row["office_locations"]): string {
   if (!office) return "";
@@ -33,6 +34,7 @@ const toDomain = (r: Row): UserProfile => ({
   officeLocationId: r.office_location_id,
   officeName: officeNameOf(r.office_locations),
   avatarUrl: r.avatar_url,
+  createdAt: r.created_at,
 });
 
 export const usersRepository = {
@@ -49,5 +51,18 @@ export const usersRepository = {
       .maybeSingle();
     if (error) throw error;
     return data ? toDomain(data as Row) : null;
+  },
+
+  /** Updates the caller's display name (RLS enforces own-row). */
+  async updateName(
+    supabase: SupabaseClient,
+    userId: string,
+    fullName: string,
+  ): Promise<void> {
+    const { error } = await supabase
+      .from("users")
+      .update({ full_name: fullName })
+      .eq("id", userId);
+    if (error) throw error;
   },
 };
