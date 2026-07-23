@@ -147,6 +147,54 @@ export type CreditAvailability = {
   available: number;
 };
 
+/** Per-day settlement projection (`v_attendance_settlement`) — read model. */
+export type AttendanceSettlement = {
+  attendanceId: string;
+  workDate: string;
+  clockIn: string | null;
+  clockOut: string | null;
+  workedMinutes: number | null;
+  status: AttendanceStatus;
+  isEdited: boolean;
+  points: number;
+  redeemedCredits: number; // applied (positive)
+  earnedCredits: number;
+  countedMinutes: number; // worked + redeemed
+};
+
+/** Presentation model for today's dashboard tile (Phase 4E). Goal progress uses
+ * Counted Time. For an in-progress day, worked/counted are point-in-time. */
+export type TodaySummary = {
+  status: AttendanceStatus | "not_started";
+  clockIn: string | null;
+  workedMinutes: number;
+  redeemedCredits: number;
+  countedMinutes: number;
+  points: number;
+  earnedCredits: number;
+  goalMinutes: number;
+  goalProgress: number; // 0..1, from Counted Time
+};
+
+/** Credit totals for the dashboard (from `v_time_credit_balance` + today's hold). */
+export type CreditSummary = {
+  totalEarned: number;
+  totalUsed: number;
+  currentBalance: number;
+  reserved: number;
+  available: number;
+  todayRedemptionStatus: RedemptionStatus | "none";
+};
+
+/** Today's redemption view model, incl. the recommended amount for the dialog. */
+export type TodayRedemption = {
+  requestedCredits: number;
+  appliedCredits: number | null;
+  status: RedemptionStatus | "none";
+  remainingShortfall: number; // max(0, goal − counted-so-far)
+  recommendedRedemption: number; // min(shortfall, available) while redeemable
+};
+
 /** A ranked leaderboard row (public columns only) for a given period. */
 export type LeaderboardRow = {
   userId: string;
