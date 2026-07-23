@@ -18,7 +18,7 @@ export function LeaderboardTable({ rows }: { rows: LeaderboardData["rows"] }) {
             <th className={cn(TH, "hidden lg:table-cell")}>Office</th>
             <th className={cn(TH, "text-right")}>Points</th>
             <th className={cn(TH, "hidden text-right sm:table-cell")}>
-              Completed
+              Days Present
             </th>
             <th className={cn(TH, "hidden sm:table-cell")}>Status</th>
           </tr>

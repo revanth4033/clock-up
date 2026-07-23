@@ -6,6 +6,7 @@ import {
   getLeaderboard,
   normalizePeriod,
 } from "@/services/leaderboard.service";
+import { PointsInfoCard } from "@/features/leaderboard/components/points-info-card";
 import { LeaderboardSummary } from "@/features/leaderboard/components/leaderboard-summary";
 import { LeaderboardTabs } from "@/features/leaderboard/components/leaderboard-tabs";
 import { LeaderboardTable } from "@/features/leaderboard/components/leaderboard-table";
@@ -44,6 +45,7 @@ export default async function LeaderboardPage({
           description="See how you rank against your team by points and consistency."
         />
 
+        <PointsInfoCard />
         <LeaderboardSummary summary={data.summary} />
         <LeaderboardTabs period={period} />
 

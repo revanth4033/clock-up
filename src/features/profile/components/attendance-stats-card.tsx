@@ -16,7 +16,7 @@ export function AttendanceStatsCard({ stats }: { stats: UserStats }) {
       {hasActivity ? (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
           <Stat value={stats.totalWorkingDays} label="Working days" />
-          <Stat value={stats.totalCompletedDays} label="Completed days" />
+          <Stat value={stats.totalCompletedDays} label="Days Present" />
           <Stat value={stats.totalPoints} label="Total points" />
           <Stat
             value={formatMinutes(stats.totalWorkedMinutes)}

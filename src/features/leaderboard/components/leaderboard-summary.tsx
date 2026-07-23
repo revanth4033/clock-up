@@ -49,7 +49,7 @@ export function LeaderboardSummary({
           <Metric label="Total points" value={summary.totalPoints} />
           <Metric label="This week" value={summary.weekPoints} />
           <Metric label="Today" value={summary.todayPoints} />
-          <Metric label="Completed days" value={summary.completedDays} />
+          <Metric label="Days Present" value={summary.completedDays} />
         </div>
       </CardContent>
     </Card>
