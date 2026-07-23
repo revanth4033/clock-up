@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LogOut, Settings, UserRound } from "lucide-react";
 import { authApi } from "@/features/auth/api";
+import { initialsOf } from "@/utils/format";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,12 +20,6 @@ export type UserMenuUser = {
   name: string;
   email: string;
 };
-
-function initialsOf(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "U";
-  return (parts[0][0] + (parts[1]?.[0] ?? "")).toUpperCase();
-}
 
 /** Account menu: shows the signed-in user and signs out. */
 export function UserMenu({ user }: { user: UserMenuUser }) {

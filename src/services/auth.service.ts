@@ -168,7 +168,12 @@ export async function updatePassword(
   }
   const { error } = await supabase.auth.updateUser({ password: newPassword });
   if (error) {
-    return { ok: false, code: "SERVER_ERROR", message: error.message };
+    console.error("[auth] updatePassword failed:", error);
+    return {
+      ok: false,
+      code: "SERVER_ERROR",
+      message: "Couldn't update your password. Please try again.",
+    };
   }
   return { ok: true, message: "Password updated.", data: null };
 }

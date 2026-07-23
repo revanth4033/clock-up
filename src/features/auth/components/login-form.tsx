@@ -33,8 +33,18 @@ export function LoginForm() {
       setServerError(res.message);
       return;
     }
+    // Only allow same-origin relative paths. Reject protocol-relative
+    // ("//evil.com") and backslash ("/\evil.com") targets, which the router
+    // would resolve to an external origin (open-redirect phishing).
     const redirect = searchParams.get("redirect");
-    router.replace(redirect?.startsWith("/") ? redirect : "/dashboard");
+    const safeRedirect =
+      redirect &&
+      redirect.startsWith("/") &&
+      !redirect.startsWith("//") &&
+      !redirect.startsWith("/\\")
+        ? redirect
+        : "/dashboard";
+    router.replace(safeRedirect);
     router.refresh();
   }
 

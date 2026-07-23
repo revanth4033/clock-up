@@ -1,11 +1,9 @@
-"use client";
-
 import type { ReactNode } from "react";
-import { motion } from "framer-motion";
 
 /**
  * Subtle page-enter animation. A template (not a layout) re-mounts on every
  * navigation, so each page fades/slides in (~250ms, per DSD motion guidance).
+ * Implemented with CSS (tw-animate-css) so it ships no client JS.
  */
 export default function DashboardTemplate({
   children,
@@ -13,12 +11,8 @@ export default function DashboardTemplate({
   children: ReactNode;
 }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-    >
+    <div className="animate-in fade-in-0 slide-in-from-bottom-2 duration-300 ease-out">
       {children}
-    </motion.div>
+    </div>
   );
 }

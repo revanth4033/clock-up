@@ -42,6 +42,14 @@ export function formatMonthYear(iso: string): string {
   }).format(new Date(iso));
 }
 
+/** Medal color for the top-3 leaderboard ranks (gold / silver / bronze). */
+export function rankMedalClass(rank: number): string {
+  if (rank === 1) return "text-amber-500";
+  if (rank === 2) return "text-slate-400";
+  if (rank === 3) return "text-orange-400";
+  return "text-muted-foreground";
+}
+
 /** "Revanth Banisetti" -> "RB". */
 export function initialsOf(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);

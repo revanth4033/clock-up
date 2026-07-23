@@ -106,7 +106,12 @@ export async function changePassword(
         message: "Your new password must be different from your current one.",
       };
     }
-    return { ok: false, code: "SERVER_ERROR", message: updateError.message };
+    console.error("[profile] changePassword failed:", updateError);
+    return {
+      ok: false,
+      code: "SERVER_ERROR",
+      message: "Couldn't change your password. Please try again.",
+    };
   }
 
   return { ok: true, message: "Password changed successfully.", data: null };

@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "./auth.service";
 import { settingsRepository } from "@/repositories/settings.repository";
@@ -11,14 +12,18 @@ const DEFAULT_SETTINGS: UserSettings = {
   notificationsEnabled: true,
 };
 
-/** The caller's persisted preferences, or the defaults if the row is missing. */
-export async function getSettings(): Promise<UserSettings | null> {
+/**
+ * The caller's persisted preferences, or the defaults if the row is missing.
+ * Wrapped in React `cache` so the dashboard layout and the settings page share
+ * a single `user_settings` read within one request.
+ */
+export const getSettings = cache(async (): Promise<UserSettings | null> => {
   const user = await getCurrentUser();
   if (!user?.profile) return null;
   const supabase = await createClient();
   const settings = await settingsRepository.find(supabase);
   return settings ?? DEFAULT_SETTINGS;
-}
+});
 
 /** A partial update to the caller's preferences (theme and/or notifications). */
 export type SettingsUpdate = Partial<{

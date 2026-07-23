@@ -30,6 +30,7 @@ export default async function SettingsPage() {
 
   return (
     <PageContainer>
+      <h1 className="sr-only">Settings</h1>
       <div className="grid grid-cols-1 gap-4 md:gap-5 xl:grid-cols-2">
         <div className="flex flex-col gap-4 md:gap-5">
           <AppearanceCard initialTheme={settings.theme} />

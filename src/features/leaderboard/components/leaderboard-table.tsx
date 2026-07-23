@@ -1,14 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { initialsOf } from "@/utils/format";
+import { initialsOf, rankMedalClass } from "@/utils/format";
 import type { LeaderboardData } from "@/services/leaderboard.service";
-
-function rankClass(rank: number) {
-  if (rank === 1) return "text-amber-500";
-  if (rank === 2) return "text-slate-400";
-  if (rank === 3) return "text-orange-400";
-  return "text-muted-foreground";
-}
 
 const TH = "px-3 py-2 font-medium";
 const TD = "px-3 py-3 whitespace-nowrap";
@@ -41,7 +34,10 @@ export function LeaderboardTable({ rows }: { rows: LeaderboardData["rows"] }) {
             >
               <td className={cn(TD, "text-center")}>
                 <span
-                  className={cn("font-bold tabular-nums", rankClass(r.rank))}
+                  className={cn(
+                    "font-bold tabular-nums",
+                    rankMedalClass(r.rank),
+                  )}
                 >
                   {r.rank}
                 </span>
