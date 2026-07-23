@@ -48,6 +48,15 @@ export type UserStats = {
   avgWorkedMinutes: number;
 };
 
+/** Theme preference (matches the DB `theme` enum + next-themes values). */
+export type Theme = "light" | "dark" | "system";
+
+/** The caller's persisted preferences (one row per user in `user_settings`). */
+export type UserSettings = {
+  theme: Theme;
+  notificationsEnabled: boolean;
+};
+
 export type LeaderboardEntry = {
   userId: string;
   name: string;

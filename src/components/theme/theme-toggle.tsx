@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { Check, Monitor, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useThemePreference } from "@/features/settings/use-theme-preference";
 
 const OPTIONS = [
   { value: "light", label: "Light", icon: Sun },
@@ -16,9 +16,9 @@ const OPTIONS = [
   { value: "system", label: "System", icon: Monitor },
 ] as const;
 
-/** Light / dark / system theme switcher (next-themes). */
+/** Light / dark / system theme switcher. Persists via useThemePreference. */
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, selectTheme } = useThemePreference();
 
   return (
     <DropdownMenu>
@@ -32,7 +32,7 @@ export function ThemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
         {OPTIONS.map(({ value, label, icon: Icon }) => (
-          <DropdownMenuItem key={value} onClick={() => setTheme(value)}>
+          <DropdownMenuItem key={value} onClick={() => selectTheme(value)}>
             <Icon className="size-4" />
             {label}
             {theme === value && <Check className="ml-auto size-4" />}

@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 import { getCurrentUser } from "@/services/auth.service";
+import { getSettings } from "@/services/settings.service";
 import { Header } from "@/components/layout/header";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { Sidebar } from "@/components/layout/sidebar";
+import { ThemeSync } from "@/features/settings/components/theme-sync";
 
 /**
  * Authenticated application shell: desktop sidebar + sticky header + content,
@@ -14,7 +16,7 @@ export default async function DashboardLayout({
 }: {
   children: ReactNode;
 }) {
-  const user = await getCurrentUser();
+  const [user, settings] = await Promise.all([getCurrentUser(), getSettings()]);
   const headerUser = {
     name: user?.profile?.fullName ?? user?.email ?? "Account",
     email: user?.email ?? "",
@@ -22,6 +24,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="bg-background min-h-screen">
+      {settings && <ThemeSync theme={settings.theme} />}
       <a
         href="#main-content"
         className="focus:bg-primary focus:text-primary-foreground sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:px-4 focus:py-2"
