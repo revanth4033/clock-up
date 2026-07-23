@@ -85,3 +85,15 @@ export type PendingRecovery = {
   workDate: string;
   clockIn: string;
 };
+
+/** A ranked leaderboard row (public columns only) for a given period. */
+export type LeaderboardRow = {
+  userId: string;
+  name: string;
+  designation: string;
+  officeName: string;
+  avatarUrl: string | null;
+  points: number;
+  completedDays: number;
+  rank: number;
+};

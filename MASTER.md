@@ -63,7 +63,11 @@
       clock_in/clock_out/recover + geo/points helpers — atomic, server-authoritative,
       points→ledger only. TS repo/service/routes, geolocation, live timer, missed-recovery
       dialog, functional dashboard, History page w/ pagination. 31/31 checks pass.
-- [ ] Phase 8 — Leaderboard
+- [x] **Phase 8 — Leaderboard** ✅ COMPLETE + VERIFIED (2026-07-23). Parameterized
+      RPC `get_leaderboard(period)` (`20260723064510`, applied) for today/week/month/all;
+      leaderboard service/repo (4 parallel reads, reuses v_leaderboard/v_user_stats/ledger);
+      summary + tabs + table (7 cols, current-user highlight, medals, status) + pagination;
+      loading/empty/error states. 11/11 UI checks pass. No attendance/points changes.
 - [ ] Phase 9 — Profile
 - [ ] Phase 10 — Settings
 - [ ] Phase 11 — Notifications
