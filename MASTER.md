@@ -38,10 +38,20 @@
 ## Phase checklist (DRPG)
 
 - [x] **Phase 1 — Project Foundation** ✅ (see below)
-- [ ] Phase 2 — Design System (globals.css, tokens, typography, theme)
-- [ ] Phase 3 — Component Library
-- [ ] Phase 4 — App Layout
-- [ ] Phase 5 — Authentication
+- [x] **Phase 2 — Design System** ✅ (globals.css ClockUp tokens, Inter + Plus
+      Jakarta Sans, #6366F1, light + dark via next-themes)
+- [~] Phase 3 — Component Library (shadcn primitives added: button, dropdown-menu,
+  avatar, separator, breadcrumb; app-specific cards/toasts/etc. still to come)
+- [x] **Phase 4 — App Layout** ✅ (sidebar, header, mobile bottom nav,
+      breadcrumbs, user-menu placeholder, page container/wrapper/header, empty-page,
+      route groups, placeholder pages) — responsive verified at 390 & 1440, light+dark
+- [x] **Phase 5 — Authentication** ✅ COMPLETE + HARDENED + FULLY VERIFIED
+      (2026-07-23). Profile creation moved to atomic DB trigger
+      (`20260723040440_handle_new_user.sql`, applied); service slimmed to signUp +
+      error mapping. proxy.ts route protection. Email confirmation disabled
+      (`mailer_autoconfirm:true`). All 19 e2e checks pass: register auto-login,
+      trigger creates users + user_settings, login, logout, session persistence,
+      protected routes, duplicate email/employee_id (both 409, atomic), password reset.
 - [ ] Phase 6 — Dashboard
 - [ ] Phase 7 — Attendance
 - [ ] Phase 8 — Leaderboard
