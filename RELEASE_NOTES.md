@@ -1,51 +1,67 @@
-# ClockUp v1.0.0 — Release Notes
+# ClockUp v1.1.0 — Release Notes
 
-**Release date:** 2026-07-23
+**Release date:** 2026-07-24
 
-ClockUp is a gamified employee work-hours tracking platform. v1.0 delivers the
-complete MVP defined in the product documentation (`/docs`): employees clock in
-and out from an approved office location, watch their progress toward a daily
-9-hour goal, earn points, and climb a company leaderboard.
+ClockUp is a gamified employee work-hours tracking platform. **v1.1 adds Time
+Credits** — a way to bank time worked beyond the daily goal and redeem it to
+reduce required hours on a later day — on top of the complete v1.0 MVP (GPS
+clock-in/out, points, leaderboard, profile, settings). Time Credits ship behind
+feature flags that default **off**, so an install behaves exactly like v1.0 until
+the flags are enabled.
 
-## Highlights
+## What's new in v1.1
 
-- **Clock in / clock out with GPS geofencing.** Attendance is only valid inside
-  an approved office radius. All timing, points, and status are computed
-  server-side by tamper-proof database functions — the client cannot forge them.
-- **Points & gamification.** 100 points at the 9-hour goal, +10 per extra 15
-  minutes (bonus capped at 40, max 140/day), recorded in an append-only ledger.
-- **Live dashboard.** Real-time working timer, progress ring, weekly summary,
-  points, attendance status, leaderboard preview, and recent activity.
-- **Leaderboard.** Company standings with period filters and your rank
-  highlighted.
-- **Profile & statistics.** All-time working days, hours, averages, and points —
-  plus editable display name and a secure change-password flow.
-- **Settings.** Light / dark / system theme that persists to your account and
-  follows you across devices; a notifications preference; account summary; and
-  sign-out.
-- **Polished, accessible UI.** Responsive from mobile to desktop, full dark
-  mode, keyboard-operable, with designed loading / empty / error states.
+- **Earn Time Credits.** A completed day earns one credit per minute worked past
+  the 9-hour goal (`max(0, worked − 540)`), recorded in an append-only ledger and
+  awarded atomically at clock-out.
+- **Redeem credits to meet your goal.** Reserve credits against an open day; at
+  clock-out, settlement applies the smaller of what you requested, your remaining
+  shortfall, and your available balance — so **Counted Time = Worked + Applied
+  Redeemed** — provided you've met the daily minimum-work threshold.
+- **Dashboard & history.** A Time Credits section shows Worked, Redeemed, Counted,
+  Points, and Earned with a Counted-based goal ring; a Credit Balance card shows
+  balance / reserved / available; a Redeem Credits card drives the flow. Attendance
+  history gains Redeemed / Counted / Earned columns so each day's result is legible.
+
+## Points model change
+
+Points are now a **flat 100** when Counted Time reaches the 9-hour goal, and `0`
+otherwise. The previous overtime bonus (+10 per extra 15 minutes) has been removed
+and historical points normalized. Points and Time Credits are independent systems
+and are never converted into one another.
+
+## Carried over from v1.0
+
+Clock in / out with GPS geofencing; a live dashboard (working timer, progress ring,
+weekly summary, leaderboard preview, recent activity); company leaderboard with
+period filters; profile & statistics with a secure change-password flow; light /
+dark / system theme persisted to your account; and a polished, accessible,
+responsive UI with designed loading / empty / error states.
 
 ## Security & quality
 
-- Row-Level Security on every table; server-authoritative RPCs for all
-  attendance writes; passwords handled entirely by Supabase Auth (never stored
-  or logged); current-password re-verification before a change.
-- Post-login redirects are constrained to same-origin paths (no open redirect).
+- Row-Level Security on every table; all attendance, points, credit-earning, and
+  redemption-settlement writes go through tamper-proof SECURITY DEFINER RPCs that
+  derive identity server-side. The credit ledger can only be written by those
+  internal paths — the low-level `add_time_credit` / `consume_time_credit` helpers
+  are not callable by clients (fixed in v1.1 hardening).
+- Passwords handled entirely by Supabase Auth; post-login redirects constrained to
+  same-origin paths.
 - Clean build with zero TypeScript and zero ESLint errors; end-to-end verified
-  (authentication, attendance engine + points + RLS, profile, settings, theme
-  persistence).
+  (settlement, attendance, credits, redemption, read models, UI, and the security
+  fix), with the flag-off path confirmed identical to v1.0.
 
 ## Getting started
 
 1. `cp .env.example .env.local` and fill in your Supabase URL + publishable key.
 2. `supabase db push` to apply migrations.
 3. `npm install && npm run dev` (Node 22 LTS).
+4. To enable Time Credits, set `ENABLE_TIME_CREDITS=true` (and
+   `ENABLE_CREDIT_REDEMPTION=true` for redemption) in the environment and restart.
 
 ## Known limitations
 
 Timestamps are UTC (no per-office timezone yet); notification **delivery** is
-deferred to a later release (the preference is stored); avatar upload, the
-holidays calendar, and analytics are reserved for future versions. See
-`KNOWN_LIMITATIONS.md` and `TECHNICAL_DEBT.md` for the full list and the v1.1
-backlog.
+deferred (the preference is stored); avatar upload, the holidays calendar, and
+analytics are reserved for future versions. See `KNOWN_LIMITATIONS.md` and
+`TECHNICAL_DEBT.md`.

@@ -1,7 +1,7 @@
 # ADR-009 — Time Credit Redemption & the Flat-100 Points Model
 
-**Status:** Accepted (frozen product specification). This ADR is the **source of
-truth** for all Time-Credit and Points implementation from Phase 4B onward. It
+**Status:** Accepted — implemented in v1.1.0 (frozen product specification). This
+ADR is the **source of truth** for all Time-Credit and Points implementation. It
 refines the redemption direction sketched in ADR-008 and **changes the points
 rule** established in ADR-003. Where this ADR and ADR-003/ADR-008 differ, this
 ADR wins.

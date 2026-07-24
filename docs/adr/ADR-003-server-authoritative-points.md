@@ -1,6 +1,10 @@
 # ADR-003 — Server-Authoritative Points System
 
-**Status:** Accepted (2026-07-22 approved decision; implemented 2026-07-23).
+**Status:** Accepted (2026-07-22 approved decision; implemented 2026-07-23). The
+server-authoritative _architecture_ described here still stands, but the points
+_formula_ (100 at goal + overtime bonus) is **superseded by
+[ADR-009](./ADR-009-credit-redemption-and-points.md)** as of v1.1.0 — points are
+now a flat 100 at the goal with no overtime bonus.
 
 ## Context
 

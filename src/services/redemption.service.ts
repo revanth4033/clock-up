@@ -10,11 +10,11 @@ import type { CreditAvailability, RedemptionHold } from "@/types/domain";
 const HISTORY_LIMIT = 50;
 
 /**
- * Redemption domain service (Phase 4B — infrastructure only). Owns the hold
- * business rules; contains NO attendance, settlement, ledger, or points logic.
+ * Redemption domain service. Owns the hold write path (create / update / cancel),
+ * consumed by the /api/v1/redemption routes; contains NO attendance, settlement,
+ * ledger, or points logic — the RPC is the sole authority on the business rules.
  * Every method is gated by ENABLE_CREDIT_REDEMPTION: when the flag is off the
- * subsystem is dormant and the app behaves exactly as today. Nothing in the
- * running application calls this service yet.
+ * subsystem is dormant and the app behaves exactly as the prior release.
  */
 
 const ERROR_MESSAGES: Record<string, string> = {

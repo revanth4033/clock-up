@@ -1,7 +1,9 @@
 # ADR-008 — Time Credits System (staged migration)
 
-**Status:** Proposed — Phase 1 (architecture preparation) landed; Phase 2
-(implementation) not yet started. Related: ADR-003 (server-authoritative points).
+**Status:** Superseded by [ADR-009](./ADR-009-credit-redemption-and-points.md) —
+implemented in v1.1.0. This ADR captured the initial staged-migration plan for
+Time Credits; the redemption and points model that actually shipped is specified
+in ADR-009. Related: ADR-003 (server-authoritative points).
 
 ## Context
 

@@ -98,39 +98,17 @@ export type PendingRecovery = {
 };
 
 /**
- * Time Credits — subsystem introduced as a staged migration (see docs/adr/ADR-008).
- *
- * Phase 2 builds the full infrastructure (table / RLS / view / RPCs / repository
- * / service) but wires nothing into the running app: no credit is earned at
- * clock-out and none is consumed. `credits` is signed — a future redemption
- * records a negative "used" entry — so no type changes as later phases land.
+ * Time Credits — a gamified balance earned by working past the daily goal and
+ * redeemable to reduce required hours (see docs/adr/ADR-009). Tracked in the
+ * append-only `time_credit_ledger`, entirely separate from points.
  */
-export type TimeCreditEntryType =
-  "earned" | "used" | "manual_adjustment" | "expired" | "bonus";
-
-/** A single append-only `time_credit_ledger` row (domain shape). */
-export type TimeCreditEntry = {
-  id: string;
-  attendanceId: string | null;
-  entryType: TimeCreditEntryType;
-  credits: number; // positive = earned, negative = used (redemption)
-  reason: string;
-  createdAt: string;
-};
-
-/** A user's derived credit position (`v_time_credit_balance`). `used` is a
- * positive magnitude; `balance` = earned − used. */
-export type TimeCreditSummary = {
-  earned: number;
-  used: number;
-  balance: number;
-};
 
 /** Redemption hold lifecycle (see ADR-009). */
 export type RedemptionStatus = "pending" | "applied" | "cancelled" | "released";
 
-/** A redemption hold row (`time_credit_redemption`). Phase 4B: only `pending` /
- * `cancelled` occur; `applied`/`released` arrive with settlement in Phase 4D. */
+/** A redemption hold row (`time_credit_redemption`). A hold is `pending` while
+ * reserved, then settled at clock-out to `applied` (credits consumed) or
+ * `released` (goal met / no shortfall); a pending hold may be `cancelled`. */
 export type RedemptionHold = {
   id: string;
   attendanceId: string;
