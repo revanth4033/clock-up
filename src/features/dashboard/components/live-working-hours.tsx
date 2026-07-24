@@ -4,16 +4,37 @@ import { useSyncExternalStore } from "react";
 import { ProgressRing } from "./progress-ring";
 import { formatMinutes, toPercent } from "@/utils/format";
 
-/** Ticking clock: re-renders every second; getSnapshot reads the current time.
- * Returns 0 during SSR / pre-hydration (stable, no mismatch). */
+/** A single shared 1-second clock exposed as an external store. `getSnapshot`
+ * returns a CACHED timestamp that changes only when the interval ticks, so the
+ * value is stable between notifications — the contract `useSyncExternalStore`
+ * requires. (Returning a fresh `Date.now()` on every call is seen as a change
+ * on every render, which drives an infinite re-render loop.) `getServerSnapshot`
+ * returns 0 → the SSR / pre-hydration placeholder, unchanged. */
+let currentNow = Date.now();
+const listeners = new Set<() => void>();
+let intervalId: ReturnType<typeof setInterval> | null = null;
+
 function subscribe(callback: () => void) {
-  const id = setInterval(callback, 1000);
-  return () => clearInterval(id);
+  listeners.add(callback);
+  if (intervalId === null) {
+    currentNow = Date.now();
+    intervalId = setInterval(() => {
+      currentNow = Date.now();
+      for (const listener of listeners) listener();
+    }, 1000);
+  }
+  return () => {
+    listeners.delete(callback);
+    if (listeners.size === 0 && intervalId !== null) {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+  };
 }
 function useNow() {
   return useSyncExternalStore(
     subscribe,
-    () => Date.now(),
+    () => currentNow,
     () => 0,
   );
 }
