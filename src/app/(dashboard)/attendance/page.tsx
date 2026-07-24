@@ -3,7 +3,12 @@ import { PageContainer } from "@/components/layout/page-container";
 import { ContentWrapper } from "@/components/layout/content-wrapper";
 import { PageHeader } from "@/components/layout/page-header";
 import { getAttendanceHistory } from "@/services/attendance.service";
-import { AttendanceHistoryTable } from "@/features/attendance/components/attendance-history-table";
+import { getSettlementHistory } from "@/services/presentation.service";
+import { ENABLE_TIME_CREDITS } from "@/lib/flags";
+import {
+  AttendanceHistoryTable,
+  type HistoryCredits,
+} from "@/features/attendance/components/attendance-history-table";
 import { HistoryPagination } from "@/features/attendance/components/history-pagination";
 
 export const metadata: Metadata = { title: "Attendance" };
@@ -15,9 +20,11 @@ export default async function AttendancePage({
 }) {
   const params = await searchParams;
   const requested = Number(params.page ?? "1");
-  const result = await getAttendanceHistory(
-    Number.isFinite(requested) ? requested : 1,
-  );
+  const requestedPage = Number.isFinite(requested) ? requested : 1;
+  const [result, settlement] = await Promise.all([
+    getAttendanceHistory(requestedPage),
+    ENABLE_TIME_CREDITS ? getSettlementHistory(requestedPage) : null,
+  ]);
 
   if (!result.ok) {
     return (
@@ -31,6 +38,19 @@ export default async function AttendancePage({
   }
 
   const { records, page, totalPages, total, officeName } = result.data;
+
+  const credits: HistoryCredits | undefined = settlement
+    ? Object.fromEntries(
+        settlement.records.map((s) => [
+          s.attendanceId,
+          {
+            redeemedCredits: s.redeemedCredits,
+            countedMinutes: s.countedMinutes,
+            earnedCredits: s.earnedCredits,
+          },
+        ]),
+      )
+    : undefined;
 
   return (
     <PageContainer>
@@ -53,7 +73,11 @@ export default async function AttendancePage({
           </div>
         ) : (
           <div className="border-border bg-card overflow-hidden rounded-2xl border">
-            <AttendanceHistoryTable records={records} officeName={officeName} />
+            <AttendanceHistoryTable
+              records={records}
+              officeName={officeName}
+              credits={credits}
+            />
             {totalPages > 1 && (
               <div className="border-border border-t p-4">
                 <HistoryPagination page={page} totalPages={totalPages} />

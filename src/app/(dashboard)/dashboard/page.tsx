@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { PageContainer } from "@/components/layout/page-container";
 import { getDashboardData } from "@/services/dashboard.service";
+import {
+  getCreditSummary,
+  getTodayRedemption,
+  getTodaySummary,
+} from "@/services/presentation.service";
+import { ENABLE_CREDIT_REDEMPTION, ENABLE_TIME_CREDITS } from "@/lib/flags";
 import { WelcomeCard } from "@/features/dashboard/components/welcome-card";
 import { WorkingHoursCard } from "@/features/dashboard/components/working-hours-card";
 import { AttendanceStatusCard } from "@/features/dashboard/components/attendance-status-card";
@@ -9,12 +15,22 @@ import { WeeklySummaryCard } from "@/features/dashboard/components/weekly-summar
 import { QuickActionsCard } from "@/features/dashboard/components/quick-actions-card";
 import { LeaderboardPreviewCard } from "@/features/dashboard/components/leaderboard-preview-card";
 import { RecentAttendanceCard } from "@/features/dashboard/components/recent-attendance-card";
+import { TimeCreditsSection } from "@/features/credits/components/time-credits-section";
 import { MissedClockOutDialog } from "@/features/attendance/components/missed-clock-out-dialog";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
 export default async function DashboardPage() {
-  const data = await getDashboardData();
+  const [data, creditData] = await Promise.all([
+    getDashboardData(),
+    ENABLE_TIME_CREDITS
+      ? Promise.all([
+          getTodaySummary(),
+          getCreditSummary(),
+          getTodayRedemption(),
+        ])
+      : Promise.resolve(null),
+  ]);
 
   if (!data) {
     return (
@@ -31,6 +47,15 @@ export default async function DashboardPage() {
     );
   }
 
+  const credits =
+    creditData && creditData[0] && creditData[1] && creditData[2]
+      ? {
+          today: creditData[0],
+          credit: creditData[1],
+          redemption: creditData[2],
+        }
+      : null;
+
   return (
     <PageContainer>
       <h1 className="sr-only">Dashboard</h1>
@@ -44,6 +69,16 @@ export default async function DashboardPage() {
           officeName={data.profile.officeName}
           className="rounded-2xl md:col-span-2 xl:col-span-3"
         />
+
+        {credits && (
+          <TimeCreditsSection
+            today={credits.today}
+            credit={credits.credit}
+            redemption={credits.redemption}
+            redemptionEnabled={ENABLE_CREDIT_REDEMPTION}
+            className="md:col-span-2 xl:col-span-3"
+          />
+        )}
 
         <WorkingHoursCard today={data.today} workingHours={data.workingHours} />
 
