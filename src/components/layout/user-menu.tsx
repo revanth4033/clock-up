@@ -11,17 +11,23 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 export type UserMenuUser = {
   name: string;
+  role: string;
   email: string;
 };
 
-/** Account menu: shows the signed-in user and signs out. */
+/**
+ * Account dropdown: signed-in user info, Profile / Settings links, and sign-out.
+ * The trigger is the native Base UI menu button (styled as a ghost icon button)
+ * with the avatar inside — Base UI wires open/close, outside-click, Escape and
+ * keyboard navigation. Profile and Settings route to existing pages; Logout
+ * reuses the existing auth flow.
+ */
 export function UserMenu({ user }: { user: UserMenuUser }) {
   const router = useRouter();
 
@@ -49,30 +55,44 @@ export function UserMenu({ user }: { user: UserMenuUser }) {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="font-normal">
-          <span className="text-foreground block truncate text-sm font-medium">
+
+      <DropdownMenuContent align="end" sideOffset={8} className="w-60">
+        {/* User information — a plain header block (not a Menu.GroupLabel,
+            which Base UI requires to live inside a Menu.Group). */}
+        <div className="px-1.5 py-1.5">
+          <p className="text-foreground truncate text-sm font-medium">
             {user.name}
-          </span>
-          {user.email && (
-            <span className="text-muted-foreground block truncate text-xs">
-              {user.email}
-            </span>
+          </p>
+          {user.role && (
+            <p className="text-muted-foreground truncate text-xs">
+              {user.role}
+            </p>
           )}
-        </DropdownMenuLabel>
+          {user.email && (
+            <p className="text-muted-foreground truncate text-xs">
+              {user.email}
+            </p>
+          )}
+        </div>
+
         <DropdownMenuSeparator />
+
+        {/* Navigation */}
         <DropdownMenuItem render={<Link href="/profile" />}>
           <UserRound className="size-4" />
-          Profile
+          My Profile
         </DropdownMenuItem>
         <DropdownMenuItem render={<Link href="/settings" />}>
           <Settings className="size-4" />
           Settings
         </DropdownMenuItem>
+
         <DropdownMenuSeparator />
+
+        {/* Session */}
         <DropdownMenuItem variant="destructive" onClick={handleLogout}>
           <LogOut className="size-4" />
-          Log out
+          Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

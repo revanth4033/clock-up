@@ -19,6 +19,7 @@ export default async function DashboardLayout({
   const [user, settings] = await Promise.all([getCurrentUser(), getSettings()]);
   const headerUser = {
     name: user?.profile?.fullName ?? user?.email ?? "Account",
+    role: user?.profile?.designation ?? "",
     email: user?.email ?? "",
   };
 
