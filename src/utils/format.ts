@@ -1,5 +1,7 @@
 /** Presentation helpers (pure, no business logic). */
 
+import { APP_TIME_ZONE } from "@/constants/timezone";
+
 /** 465 -> "7h 45m", 60 -> "1h", 45 -> "45m", 0 -> "0m". */
 export function formatMinutes(totalMinutes: number): string {
   const minutes = Math.max(0, Math.round(totalMinutes));
@@ -10,22 +12,27 @@ export function formatMinutes(totalMinutes: number): string {
   return `${hours}h ${rest}m`;
 }
 
-/** ISO timestamp -> "9:04 AM"; null -> "—". */
+/** ISO timestamp -> "9:04 AM"; null -> "—". Rendered in the application
+ * timezone so it is identical on the server (UTC runtime) and the client. */
 export function formatTimeOfDay(iso: string | null): string {
   if (!iso) return "—";
   return new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "2-digit",
+    timeZone: APP_TIME_ZONE,
   }).format(new Date(iso));
 }
 
-/** "2026-07-23" -> "Thu, Jul 23". */
+/** "2026-07-23" -> "Thu, Jul 23". A work-date is a calendar date (stored in
+ * UTC by the attendance engine), so it is anchored to UTC — the label always
+ * equals the stored date, independent of the runtime timezone. */
 export function formatShortDate(dateStr: string): string {
   return new Intl.DateTimeFormat("en-US", {
     weekday: "short",
     month: "short",
     day: "numeric",
-  }).format(new Date(`${dateStr}T00:00:00`));
+    timeZone: "UTC",
+  }).format(new Date(`${dateStr}T00:00:00Z`));
 }
 
 /** Clamps a 0..1 ratio to a whole percentage. */
@@ -34,11 +41,13 @@ export function toPercent(value: number, max: number): number {
   return Math.min(100, Math.round((value / max) * 100));
 }
 
-/** ISO timestamp -> "July 2026" (used for "member since"). */
+/** ISO timestamp -> "July 2026" (used for "member since"). Rendered in the
+ * application timezone for server/client consistency. */
 export function formatMonthYear(iso: string): string {
   return new Intl.DateTimeFormat("en-US", {
     month: "long",
     year: "numeric",
+    timeZone: APP_TIME_ZONE,
   }).format(new Date(iso));
 }
 

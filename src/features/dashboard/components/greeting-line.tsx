@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { APP_TIME_ZONE } from "@/constants/timezone";
 
 const subscribe = () => () => {};
 
@@ -39,16 +40,26 @@ export function GreetingLine({ name }: { name: string }) {
 
   const now = new Date();
   const firstName = name.split(" ")[0] || name;
+  // Hour + date in the application timezone (not the viewer's), so the greeting
+  // and date stay consistent with the server-rendered clock times.
+  const hour = Number(
+    new Intl.DateTimeFormat("en-US", {
+      hour: "2-digit",
+      hourCycle: "h23",
+      timeZone: APP_TIME_ZONE,
+    }).format(now),
+  );
   const date = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
+    timeZone: APP_TIME_ZONE,
   }).format(now);
 
   return (
     <div>
       <p className="font-heading text-xl font-bold tracking-tight sm:text-2xl">
-        {greetingFor(now.getHours())}, {firstName} 👋
+        {greetingFor(hour)}, {firstName} 👋
       </p>
       <p className="text-muted-foreground text-sm">{date}</p>
     </div>
