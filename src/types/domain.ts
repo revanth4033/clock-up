@@ -177,6 +177,7 @@ export type TodayRedemption = {
   status: RedemptionStatus | "none";
   remainingShortfall: number; // max(0, goal − counted-so-far)
   recommendedRedemption: number; // min(shortfall, available) while redeemable
+  minWorkMinutes: number; // minimum worked minutes before redemption unlocks
 };
 
 /** A ranked leaderboard row (public columns only) for a given period. */

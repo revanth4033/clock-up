@@ -101,6 +101,7 @@ export default async function DashboardPage() {
             today={credits.today}
             credit={credits.credit}
             redemption={credits.redemption}
+            dayType={data.today.dayType}
           />
         )}
         {credits && <CreditBalanceCard credit={credits.credit} />}

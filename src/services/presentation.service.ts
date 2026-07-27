@@ -127,6 +127,7 @@ export async function getTodayRedemption(): Promise<TodayRedemption | null> {
     status: hold ? hold.status : "none",
     remainingShortfall: shortfall,
     recommendedRedemption: Math.max(0, recommended),
+    minWorkMinutes: minWork,
   };
 }
 
