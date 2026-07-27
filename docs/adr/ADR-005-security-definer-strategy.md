@@ -68,6 +68,30 @@ each.
 - `SECURITY DEFINER` requires care (search_path, schema-qualification, internal
   identity) — done consistently here, but a real footgun if copied carelessly.
 
+## Definer Views — Accepted Security Advisor Exception (2026-07-27)
+
+The same definer rationale extends to one read-only **view**:
+`public.v_leaderboard`. It intentionally uses `SECURITY DEFINER` (the Postgres
+view default — it is created without `security_invoker = on`) so it can rank
+across **all** users while the base tables (`users`, `attendance`,
+`points_ledger`) enforce strict own-row RLS. It exposes only public leaderboard
+columns — `full_name`, `avatar_url`, `total_points`, `total_completed_days`,
+`total_worked_minutes`, `last_completion_at`, `rank` — and `SELECT` is granted
+only to `authenticated`.
+
+Converting it to `SECURITY INVOKER` would **break the feature**: under own-row
+RLS the view would return only the caller's own row. The parallel
+`public.get_leaderboard(text)` RPC is `SECURITY DEFINER` for the same reason.
+
+**Decision:** the Supabase Security Advisor **"Security Definer View"** warning
+for `public.v_leaderboard` is an **accepted, intentional exception**, not a
+defect. Its safety rests on the curated public-only projection (a view can
+return only its declared columns) and the `authenticated`-only grant — audited
+in the SECURITY DEFINER audit of 2026-07-27. Replacing the view with the
+existing definer RPC is a possible future refactor, **not** a security fix. The
+rationale is also annotated directly on the object via migration
+`20260727010000_document_leaderboard_security_definer.sql`.
+
 ## Future Considerations
 
 - A `SUPABASE_SECRET_KEY` slot exists in `.env.example` (unused) for a future
