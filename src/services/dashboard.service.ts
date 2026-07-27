@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "./auth.service";
 import { detectMissedClockOuts } from "./attendance.service";
 import { attendanceRepository } from "@/repositories/attendance.repository";
+import { holidayRepository } from "@/repositories/holidays.repository";
 import { pointsRepository } from "@/repositories/points.repository";
 import { statsRepository } from "@/repositories/stats.repository";
 import {
@@ -12,6 +13,7 @@ import {
 } from "@/constants/attendance";
 import type {
   AttendanceRecord,
+  DayType,
   LeaderboardEntry,
   PendingRecovery,
 } from "@/types/domain";
@@ -21,8 +23,11 @@ export type TodayState =
 
 export type DashboardData = {
   profile: { fullName: string; designation: string; officeName: string };
+  todayWorkDate: string;
   today: {
     state: TodayState;
+    dayType: DayType;
+    holidayName: string | null;
     clockIn: string | null;
     clockOut: string | null;
     workedMinutes: number | null;
@@ -67,17 +72,39 @@ export async function getDashboardData(): Promise<DashboardData | null> {
   // Detection runs first so a flipped 'missed_clock_out' is reflected below.
   await detectMissedClockOuts(supabase, userId, todayStr);
 
-  const [recent, weekRows, stats, pointsRows, leaderboard, pendingRecovery] =
-    await Promise.all([
-      attendanceRepository.findRecent(supabase, userId, RECENT_LIMIT),
-      statsRepository.getWeekSummary(supabase),
-      statsRepository.getUserStats(supabase),
-      pointsRepository.findSince(supabase, userId, weekAgoIso),
-      statsRepository.getLeaderboardTop(supabase, LEADERBOARD_LIMIT),
-      attendanceRepository.findPendingRecovery(supabase, userId),
-    ]);
+  const [
+    recent,
+    weekRows,
+    stats,
+    pointsRows,
+    leaderboard,
+    pendingRecovery,
+    holidayName,
+  ] = await Promise.all([
+    attendanceRepository.findRecent(supabase, userId, RECENT_LIMIT),
+    statsRepository.getWeekSummary(supabase),
+    statsRepository.getUserStats(supabase),
+    pointsRepository.findSince(supabase, userId, weekAgoIso),
+    statsRepository.getLeaderboardTop(supabase, LEADERBOARD_LIMIT),
+    attendanceRepository.findPendingRecovery(supabase, userId),
+    holidayRepository.findForDate(
+      supabase,
+      user.profile.officeLocationId,
+      todayStr,
+    ),
+  ]);
 
   const todayRecord = recent.find((r) => r.workDate === todayStr) ?? null;
+
+  // Day type is resolved independently of attendance: a holiday (office-specific
+  // or company-wide) wins over the weekend, which wins over a normal work day.
+  // Same UTC work-date basis the attendance engine uses.
+  const dow = new Date(`${todayStr}T00:00:00.000Z`).getUTCDay(); // 0 Sun … 6 Sat
+  const dayType: DayType = holidayName
+    ? "holiday"
+    : dow === 0 || dow === 6
+      ? "weekend"
+      : "working";
 
   const daysPresent = weekRows.length;
   const totalMinutes = weekRows.reduce(
@@ -98,8 +125,11 @@ export async function getDashboardData(): Promise<DashboardData | null> {
       designation: user.profile.designation,
       officeName: user.profile.officeName,
     },
+    todayWorkDate: todayStr,
     today: {
       state: todayRecord ? todayRecord.status : "not_started",
+      dayType,
+      holidayName,
       clockIn: todayRecord?.clockIn ?? null,
       clockOut: todayRecord?.clockOut ?? null,
       workedMinutes: todayRecord?.workedMinutes ?? null,

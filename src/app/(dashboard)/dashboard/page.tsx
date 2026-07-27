@@ -12,10 +12,12 @@ import { WorkingHoursCard } from "@/features/dashboard/components/working-hours-
 import { AttendanceStatusCard } from "@/features/dashboard/components/attendance-status-card";
 import { PointsCard } from "@/features/dashboard/components/points-card";
 import { WeeklySummaryCard } from "@/features/dashboard/components/weekly-summary-card";
-import { QuickActionsCard } from "@/features/dashboard/components/quick-actions-card";
+import { TodayWorkCard } from "@/features/dashboard/components/today-work-card";
 import { LeaderboardPreviewCard } from "@/features/dashboard/components/leaderboard-preview-card";
 import { RecentAttendanceCard } from "@/features/dashboard/components/recent-attendance-card";
-import { TimeCreditsSection } from "@/features/credits/components/time-credits-section";
+import { TodayCreditsCard } from "@/features/credits/components/today-credits-card";
+import { CreditBalanceCard } from "@/features/credits/components/credit-balance-card";
+import { RedeemCard } from "@/features/credits/components/redeem-card";
 import { MissedClockOutDialog } from "@/features/attendance/components/missed-clock-out-dialog";
 
 export const metadata: Metadata = { title: "Dashboard" };
@@ -63,6 +65,7 @@ export default async function DashboardPage() {
         <MissedClockOutDialog recovery={data.pendingRecovery} />
       )}
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 xl:grid-cols-3">
+        {/* Greeting & context — the page header */}
         <WelcomeCard
           name={data.profile.fullName}
           designation={data.profile.designation}
@@ -70,34 +73,47 @@ export default async function DashboardPage() {
           className="rounded-2xl md:col-span-2 xl:col-span-3"
         />
 
+        {/* Priority 1 — the employee's primary action, first and most prominent */}
+        <TodayWorkCard
+          today={data.today}
+          workingHours={data.workingHours}
+          points={data.points}
+          creditToday={credits?.today ?? null}
+          className="md:col-span-2 xl:col-span-3"
+        />
+
+        {/* Row 1 — today's work (Today's Attendance + This Week stacked in the middle) */}
+        <WorkingHoursCard today={data.today} workingHours={data.workingHours} />
+        <div className="flex flex-col gap-4 md:gap-5">
+          <AttendanceStatusCard today={data.today} />
+          <WeeklySummaryCard weekly={data.weekly} />
+        </div>
         {credits && (
-          <TimeCreditsSection
+          <TodayCreditsCard
             today={credits.today}
-            credit={credits.credit}
-            redemption={credits.redemption}
-            redemptionEnabled={ENABLE_CREDIT_REDEMPTION}
-            className="md:col-span-2 xl:col-span-3"
+            dayType={data.today.dayType}
           />
         )}
 
-        <WorkingHoursCard today={data.today} workingHours={data.workingHours} />
+        {/* Row 2 — Redeem Credits · Credit Balance · Points */}
+        {credits && ENABLE_CREDIT_REDEMPTION && (
+          <RedeemCard
+            today={credits.today}
+            credit={credits.credit}
+            redemption={credits.redemption}
+          />
+        )}
+        {credits && <CreditBalanceCard credit={credits.credit} />}
+        <PointsCard points={data.points} />
 
-        <div className="flex flex-col gap-4 md:gap-5">
-          <AttendanceStatusCard today={data.today} />
-          <PointsCard points={data.points} />
+        {/* Row 3 — reference tables, half & half across the full width */}
+        <div className="grid grid-cols-1 gap-4 md:col-span-2 md:gap-5 lg:grid-cols-2 xl:col-span-3">
+          <LeaderboardPreviewCard leaderboard={data.leaderboard} />
+          <RecentAttendanceCard
+            recent={data.recent}
+            todayWorkDate={data.todayWorkDate}
+          />
         </div>
-
-        <div className="flex flex-col gap-4 md:gap-5">
-          <WeeklySummaryCard weekly={data.weekly} />
-          <QuickActionsCard state={data.today.state} />
-        </div>
-
-        <LeaderboardPreviewCard leaderboard={data.leaderboard} />
-
-        <RecentAttendanceCard
-          recent={data.recent}
-          className="md:col-span-2 xl:col-span-2"
-        />
       </div>
     </PageContainer>
   );

@@ -25,6 +25,12 @@ export type UserProfile = {
 export type AttendanceStatus =
   "working" | "completed" | "missed_clock_out" | "incomplete";
 
+/** The kind of calendar day, resolved BEFORE attendance state. Working days
+ * follow the clock-in flow; non-working days show a contextual, no-attendance
+ * state (no clock-in, goal, remaining, or finish). Extensible: `approved_leave`,
+ * `half_day`, etc. can join once a leave subsystem exists (none does today). */
+export type DayType = "working" | "weekend" | "holiday";
+
 export type AttendanceRecord = {
   id: string;
   workDate: string; // YYYY-MM-DD

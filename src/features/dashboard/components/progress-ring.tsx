@@ -6,6 +6,9 @@ type ProgressRingProps = {
   max: number;
   size?: number;
   strokeWidth?: number;
+  /** Render only the muted track (no progress arc) — used for rest days, where
+   * a filled ring would wrongly imply an unmet obligation. */
+  trackOnly?: boolean;
   children?: ReactNode;
   className?: string;
 };
@@ -16,6 +19,7 @@ export function ProgressRing({
   max,
   size = 168,
   strokeWidth = 12,
+  trackOnly = false,
   children,
   className,
 }: ProgressRingProps) {
@@ -48,17 +52,19 @@ export function ProgressRing({
           strokeWidth={strokeWidth}
           className="stroke-muted"
         />
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          fill="none"
-          strokeWidth={strokeWidth}
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={offset}
-          className="stroke-primary"
-        />
+        {!trackOnly && (
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            strokeWidth={strokeWidth}
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+            className="stroke-primary"
+          />
+        )}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
         {children}

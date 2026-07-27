@@ -42,11 +42,13 @@ export function formatMonthYear(iso: string): string {
   }).format(new Date(iso));
 }
 
-/** Medal color for the top-3 leaderboard ranks (gold / silver / bronze). */
+/** Medal color for the top-3 leaderboard ranks (gold / silver / bronze).
+ * Theme-aware so the number meets WCAG AA contrast on both light and dark
+ * cards (darker shades on light, lighter shades on dark). */
 export function rankMedalClass(rank: number): string {
-  if (rank === 1) return "text-amber-500";
-  if (rank === 2) return "text-slate-400";
-  if (rank === 3) return "text-orange-400";
+  if (rank === 1) return "text-amber-700 dark:text-amber-400";
+  if (rank === 2) return "text-slate-600 dark:text-slate-300";
+  if (rank === 3) return "text-orange-700 dark:text-orange-400";
   return "text-muted-foreground";
 }
 

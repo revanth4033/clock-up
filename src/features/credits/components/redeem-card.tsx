@@ -69,7 +69,8 @@ export function RedeemCard({
       contentClassName="space-y-4"
       action={<RedemptionStatusBadge status={redemption.status} />}
     >
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {/* 2×2 grid reads cleanly in this narrow card (was a cramped 4-across). */}
+      <div className="grid grid-cols-2 gap-3">
         <Stat value={credit.available} label="Available" />
         <Stat value={redemption.requestedCredits} label="Requested" />
         <Stat
