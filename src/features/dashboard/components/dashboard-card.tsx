@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { CARD_INFO } from "../lib/card-info";
+import { CardInfoTooltip } from "./card-info-tooltip";
+import { HoverCard } from "./card-hover";
 
 type DashboardCardProps = {
   title?: string;
@@ -22,8 +25,10 @@ export function DashboardCard({
   className,
   contentClassName,
 }: DashboardCardProps) {
-  return (
-    <Card className={cn("gap-0 rounded-2xl", className)}>
+  const info = title ? CARD_INFO[title] : undefined;
+
+  const content = (
+    <>
       {(title || action) && (
         <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-3">
           <div className="flex items-center gap-2">
@@ -33,11 +38,19 @@ export function DashboardCard({
                 {title}
               </h2>
             )}
+            {info && title && <CardInfoTooltip text={info} label={title} />}
           </div>
           {action}
         </CardHeader>
       )}
       <CardContent className={cn(contentClassName)}>{children}</CardContent>
-    </Card>
+    </>
   );
+
+  // With an info hint, the whole card opens the tooltip on hover (the tooltip
+  // stays anchored to the icon). Otherwise a plain card.
+  if (info) {
+    return <HoverCard className={className}>{content}</HoverCard>;
+  }
+  return <Card className={cn("gap-0 rounded-2xl", className)}>{content}</Card>;
 }

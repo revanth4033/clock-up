@@ -17,7 +17,19 @@ export function Sidebar() {
         ))}
       </nav>
       <div className="text-muted-foreground px-5 py-4 text-xs">
-        ClockUp · MVP v1.0
+        <p>ClockUp · MVP v1.0</p>
+        <p className="mt-2 leading-relaxed">
+          Designed &amp; developed by
+          <br />
+          <a
+            href="https://www.linkedin.com/in/revanth-banisetti-9401ba21a/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary font-medium hover:underline"
+          >
+            Revanth Banisetti
+          </a>
+        </p>
       </div>
     </aside>
   );
